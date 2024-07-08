@@ -41,7 +41,9 @@ public class StudentRepo {
 	public List<Student> findAll() {
 		// TODO Auto-generated method stub
 		String sql = "select * from student";
-		RowMapper<Student> mapper = new RowMapper<Student>() {
+		
+		//Anonymous class usage
+		/*RowMapper<Student> mapper = new RowMapper<Student>() {
 
 			@Override
 			public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -53,6 +55,19 @@ public class StudentRepo {
 				s.setMarks(rs.getInt("marks"));
 				return s; //we are taking the data from rs, adding it to the Student object s and returning it
 			}
+		};
+		*/
+		
+		//Using Lambda Expression:
+		RowMapper<Student> mapper = ( rs, rowNum) -> {
+				// TODO Auto-generated method stub
+				
+				Student s = new Student();
+				s.setRollno(rs.getInt("rollno"));
+				s.setName(rs.getString("name"));
+				s.setMarks(rs.getInt("marks"));
+				return s; //we are taking the data from rs, adding it to the Student object s and returning it
+
 		};
 		
 		return jdbc.query(sql, mapper);
